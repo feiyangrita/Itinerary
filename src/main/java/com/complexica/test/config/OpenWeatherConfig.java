@@ -1,6 +1,5 @@
 package com.complexica.test.config;
 
-import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -10,12 +9,20 @@ import org.springframework.stereotype.Component;
  * Created by feiyang on 29/9/21.
  */
 @Component
-//@Data
 @ConfigurationProperties(prefix = "openweather.api")
 public class OpenWeatherConfig {
 
     private String baseURL;
     private String key;
+    private String unit;
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
+    }
 
     public String getBaseURL() {
         return baseURL;
