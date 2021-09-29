@@ -16,8 +16,7 @@ import java.util.stream.Collectors;
 
 @Controller
 public class TestController {
-    @Autowired
-    private RestTemplate restTemplate;
+
     @Autowired
     private NameService nameService;
 
@@ -26,14 +25,6 @@ public class TestController {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("homepage.html");
         return mav;
-    }
-
-    @RequestMapping("/post-list")
-    @ResponseBody
-    public ResponseEntity<?> getPostList() {
-        final String url = "https://www.complexica.com/_hcms/postlisting?blogId=3598871758&maxLinks=5&listingType=recent&orderByViews=false&hs-expires=1604537484&hs-version=2&hs-signature=AJ2IBuFZ7xRmwgmRBgo0EfWM4qo0pSAzIA&currentUrl=https%3A%2F%2Fwww.complexica.com%2F";
-        final ResponseEntity<List> responseEntity = restTemplate.getForEntity(url, List.class);
-        return ResponseEntity.ok(responseEntity.getBody());
     }
 
     @RequestMapping("/welcome-msg")
