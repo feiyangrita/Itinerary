@@ -34,11 +34,9 @@ public class CityEntity {
     @LastModifiedDate
     @Column(name = "modify_time")
     private Date modifyTime;
-    
+
     //// TODO: 30/9/21 了解这个是做什么的
-    @OneToMany(mappedBy = "city", fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL)
-//    @JsonIgnore
+    @OneToMany(mappedBy = "city", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<WeatherEntity> weatherEntities;
 
     public Long getId() {

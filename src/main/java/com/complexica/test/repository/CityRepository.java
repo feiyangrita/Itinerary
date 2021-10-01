@@ -16,4 +16,6 @@ public interface CityRepository extends JpaRepository<CityEntity, Long> {
     List<CityEntity> findByCityName(String cityName);
 
     CityEntity findByCityNameAndCode(String cityName, String code);
+
+    void deleteByCityName(String cityName);
 }

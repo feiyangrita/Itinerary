@@ -16,7 +16,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.HttpClientErrorException;
 
+import java.security.acl.LastOwnerException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -66,8 +73,22 @@ public class WeatherServiceImpl implements WeatherService{
 
     @Override
     public List<WeatherEntity> getWeatherByCity(CityEntity cityEntity) {
-//        return weatherRepository.findByCity(cityEntity);
         return weatherRepository.findByCity(cityEntity);
+    }
+
+    @Override
+    public List<WeatherEntity> getWeatherByCityAndDate(CityEntity cityEntity, Date startDate, Date endDate){
+        return weatherRepository.findAllByCityAndForecastDateBetween(cityEntity, startDate, endDate);
+//        List<WeatherEntity> weatherEntities = weatherRepository.findByCity(cityEntity);
+//        System.out.println(weatherEntities.size());
+//        weatherEntities.forEach(entity ->{
+//            System.out.println(entity.getTemperature());
+//            if(!entity.getForecastDate().isAfter(startDate) || entity.getForecastDate().isBefore(endDate)){
+//                weatherEntities.remove(entity);
+//            }
+//        });
+
+//        return weatherEntities;
     }
 
 
@@ -86,7 +107,7 @@ public class WeatherServiceImpl implements WeatherService{
 //            WeatherEntity weatherEntity = new WeatherEntity();
 //            weatherEntity.setCloud(weatherObject.getJSONObject("clouds").getInteger("all"));
 //            weatherEntity.setTemperature(weatherObject.getJSONObject("main").getDouble("temp"));
-//            weatherEntity.setDate(weatherObject.getString("dt_txt"));
+//            weatherEntity.setForecastDate(weatherObject.getString("dt_txt"));
 //            weatherEntity.setCity(city);
 ////            city.getWeatherEntities().add(weatherEntity);
 //            weatherEntities.add(weatherEntity);
@@ -141,7 +162,7 @@ public class WeatherServiceImpl implements WeatherService{
             WeatherEntity weatherEntity = new WeatherEntity();
             weatherEntity.setCloud(weatherObject.getJSONObject("clouds").getInteger("all"));
             weatherEntity.setTemperature(weatherObject.getJSONObject("main").getDouble("temp"));
-            weatherEntity.setDate(weatherObject.getString("dt_txt"));
+            weatherEntity.setForecastDate(weatherObject.getDate("dt_txt"));
             weatherEntity.setCity(cityEntity);
 //            city.getWeatherEntities().add(weatherEntity);
             weatherEntities.add(weatherEntity);

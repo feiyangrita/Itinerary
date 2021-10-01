@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -14,5 +16,8 @@ import java.util.List;
  */
 @Repository
 public interface WeatherRepository extends JpaRepository<WeatherEntity, Long> {
+
     List<WeatherEntity> findByCity(CityEntity cityEntity);
+
+    List<WeatherEntity> findAllByCityAndForecastDateBetween(CityEntity cityEntity, Date startDate, Date endDate);
 }
