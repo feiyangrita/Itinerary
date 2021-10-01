@@ -20,6 +20,7 @@ import java.util.Objects;
  * Created by feiyang on 29/9/21.
  */
 @RestController
+@RequestMapping("/itinerary/weather")
 public class WeatherController {
 
     @Autowired
@@ -42,7 +43,7 @@ public class WeatherController {
 //
 //    }
 
-    @RequestMapping(value = "/weather", method = RequestMethod.GET)
+    @RequestMapping(value = "", method = RequestMethod.GET)
     @ResponseBody
     public List<CityEntity> getWeatherInfo(
             @RequestParam(name = "city", required = true) String cityName,
@@ -62,7 +63,7 @@ public class WeatherController {
 
     }
 
-    @RequestMapping(value = "/weather/forecast", method = RequestMethod.GET)
+    @RequestMapping(value = "/forecast", method = RequestMethod.GET)
     @ApiOperation(value = "gg", notes = "Get 5 days weather forecast with specified city name.")
     @ResponseBody
     public List<CityEntity> getWeatherForecast(

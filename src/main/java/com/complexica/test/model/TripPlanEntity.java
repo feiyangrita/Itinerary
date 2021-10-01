@@ -14,12 +14,11 @@ public class TripPlanEntity {
     private Long id;
 
 
+    @Column(unique = true)
     private String planName;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.REMOVE})
-    @JoinTable(name = "plan_t_tripstop",
-            joinColumns = @JoinColumn(name = "plan_id"),
-            inverseJoinColumns = @JoinColumn(name = "tripstop_id"))
+    @OneToMany( cascade = CascadeType.ALL)
+    @JoinColumn( name = "plan_id")
     private List<TripStopEntity> tripStopEntities;
 
     //TODO: add creation time and update time column, so we can track users update trip plan.
