@@ -31,10 +31,10 @@ public class WeatherController {
 
 //    @RequestMapping(value = "/weather", method = RequestMethod.GET)
 //    @ResponseBody
-//    public List<CityEntity> getWeatherInfo(
+//    public List<CityEntity> getWeatherByCityAndDate(
 //            @RequestParam(name = "city", required = true) String cityName,
-//            @RequestParam("startDate") @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss") Date startDate,
-//            @RequestParam("endDate") @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss" ) Date endDate) {
+//            @RequestParam(name = "startDate", required = false) @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss") Date startDate,
+//            @RequestParam(name = "endDate", required = false) @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss" ) Date endDate) {
 //
 //        weatherService.saveWeatherByCityName(cityName);
 //        System.out.println(startDate.toString());
