@@ -1,14 +1,16 @@
 package com.complexica.test.controller;
 
+import com.complexica.test.model.CityEntity;
+import com.complexica.test.model.WeatherEntity;
+import com.complexica.test.service.CityService;
 import com.complexica.test.service.WeatherService;
-import com.fasterxml.jackson.core.sym.Name;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 
-import java.util.Map;
+import java.util.Date;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by feiyang on 29/9/21.
@@ -18,14 +20,19 @@ public class WeatherController {
 
     @Autowired
     private WeatherService weatherService;
-    private Map<String, Object> params;
 
-    @RequestMapping(value = "/getweather", method = RequestMethod.GET)
+    @Autowired
+    private CityService cityService;
+
+    @RequestMapping(value = "/weather", method = RequestMethod.GET)
     @ResponseBody
-    public String getWeatherInfo(@RequestParam Map<String, Object> params) {
-        String cityName = (String)params.get("city");
-        String result  = weatherService.getWeatherByCity(cityName);
-        return result;
+    public List<CityEntity> getWeatherInfo(
+            @RequestParam(name = "city", required = true) String cityName,
+            @RequestParam("date") @DateTimeFormat(pattern="yyyy-MM-dd") Date fromDate) {
+        String result  = weatherService.saveWeatherByCityName(cityName);
+        List<CityEntity> cityEntities = cityService.getCitiesByCityName(cityName);
+        System.out.println(cityEntities.size());
+        return cityEntities;
 
     }
 }

@@ -1,8 +1,8 @@
 package com.complexica.test.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
-import javax.persistence.criteria.CriteriaBuilder;
-import java.time.LocalDateTime;
 
 /**
  * Created by feiyang on 29/9/21.
@@ -15,11 +15,17 @@ public class WeatherEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-//    private String cityName;
+    //    private String cityName;
 //    private String code;
+
     private Double temperature;
     private Integer cloud;
     private String date;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "city_id", nullable = false)
+    @JsonIgnore
+    private CityEntity city;
 
     public Long getId() {
         return id;
@@ -51,5 +57,13 @@ public class WeatherEntity {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public CityEntity getCity() {
+        return city;
+    }
+
+    public void setCity(CityEntity city) {
+        this.city = city;
     }
 }
