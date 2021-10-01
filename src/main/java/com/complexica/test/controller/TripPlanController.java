@@ -28,7 +28,12 @@ public class TripPlanController {
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody
     public TripPlanEntity add(@RequestBody TripPlanEntity tripPlanEntity ) {
-
         return tripPlanRepository.save(tripPlanEntity);
+    }
+
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    @ResponseBody
+    public List<TripPlanEntity> list() {
+
     }
 }

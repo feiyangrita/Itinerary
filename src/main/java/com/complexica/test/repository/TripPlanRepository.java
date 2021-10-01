@@ -16,4 +16,6 @@ import java.util.List;
 @Repository
 public interface TripPlanRepository extends JpaRepository<TripPlanEntity, Long> {
     TripPlanEntity findByPlanName(String planName);
+
+    List<TripPlanEntity> findAll();
 }

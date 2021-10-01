@@ -1,6 +1,5 @@
 package com.complexica.test.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -15,7 +14,7 @@ import java.util.List;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-@Table(name="city", indexes = {@Index(columnList = "cityName, code")})
+@Table(name="city", indexes = {@Index(columnList = "cityName, country")})
 public class CityEntity {
 
 
@@ -24,7 +23,7 @@ public class CityEntity {
     private Long id;
 
     private String cityName;
-    private String code;
+    private String country;
 
     @CreatedDate
     @Column(name = "create_time")
@@ -55,12 +54,12 @@ public class CityEntity {
         this.cityName = cityName;
     }
 
-    public String getCode() {
-        return code;
+    public String getCountry() {
+        return country;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setCountry(String country) {
+        this.country = country;
     }
 
     public List<WeatherEntity> getWeatherEntities() {
@@ -76,7 +75,7 @@ public class CityEntity {
         return "CityEntity{" +
                 "id=" + id +
                 ", cityName='" + cityName + '\'' +
-                ", code='" + code + '\'' +
+                ", country='" + country + '\'' +
                 ", createTime=" + createTime +
                 ", modifyTime=" + modifyTime +
                 ", weatherEntities=" + weatherEntities +

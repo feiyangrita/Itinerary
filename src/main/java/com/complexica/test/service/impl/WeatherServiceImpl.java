@@ -16,12 +16,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.HttpClientErrorException;
 
-import java.security.acl.LastOwnerException;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -132,7 +126,7 @@ public class WeatherServiceImpl implements WeatherService{
 //        CityEntity cityEntity = cityRepository.findByCityNameAndCode(cityName, cityCode);
 //        if(cityEntity == null){
 //            cityEntity = new CityEntity();
-//            cityEntity.setCode(cityCode);
+//            cityEntity.setCountry(cityCode);
 //            cityEntity.setCityName(cityName);
 //
 //            cityRepository.save(cityEntity);
@@ -153,7 +147,7 @@ public class WeatherServiceImpl implements WeatherService{
         List<WeatherEntity> weatherEntities = new ArrayList<>();
         CityEntity cityEntity = new CityEntity();
         cityEntity = new CityEntity();
-        cityEntity.setCode(cityCode);
+        cityEntity.setCountry(cityCode);
         cityEntity.setCityName(cityName);
 
 

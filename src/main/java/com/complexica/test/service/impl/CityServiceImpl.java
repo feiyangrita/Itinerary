@@ -32,8 +32,6 @@ public class CityServiceImpl implements CityService {
     @Override
     public List<CityEntity> getCitiesByCityNameAndDate(String cityName, Date startDate, Date endDate){
         List<CityEntity> cityEntities = getCitiesByCityName(cityName);
-        System.out.println("date1" + startDate);
-        System.out.println("date2" + endDate);
         cityEntities.forEach(
                 entity ->{
                     entity.setWeatherEntities(weatherService.getWeatherByCityAndDate(entity, startDate, endDate));
