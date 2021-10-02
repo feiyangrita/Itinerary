@@ -5,6 +5,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -14,7 +15,7 @@ import java.util.List;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-@Table(name="city", indexes = {@Index(columnList = "cityName, country")})
+@Table(name="city")
 public class CityEntity {
 
 
@@ -32,7 +33,15 @@ public class CityEntity {
 
     @LastModifiedDate
     @Column(name = "modify_time")
-    private Date modifyTime;
+    private LocalDateTime lastModifiedTime;
+
+    public LocalDateTime getLastModifiedTime() {
+        return lastModifiedTime;
+    }
+
+    public void setLastModifiedTime(LocalDateTime lastModifiedTime) {
+        this.lastModifiedTime = lastModifiedTime;
+    }
 
     //// TODO: 30/9/21 了解这个是做什么的
     @OneToMany(mappedBy = "city", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -77,7 +86,7 @@ public class CityEntity {
                 ", cityName='" + cityName + '\'' +
                 ", country='" + country + '\'' +
                 ", createTime=" + createTime +
-                ", modifyTime=" + modifyTime +
+                ", modifyTime=" + lastModifiedTime +
                 ", weatherEntities=" + weatherEntities +
                 '}';
     }

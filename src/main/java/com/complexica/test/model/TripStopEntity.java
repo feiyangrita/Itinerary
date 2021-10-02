@@ -1,6 +1,7 @@
 package com.complexica.test.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -24,20 +25,9 @@ public class TripStopEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String cityName;
-    private Date queryDate;
 
-//    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "plan_id", nullable = false)
-//    @JsonIgnore
-//    private TripPlanEntity plan;
-
-//    public TripPlanEntity getPlan() {
-//        return plan;
-//    }
-//
-//    public void setPlan(TripPlanEntity plan) {
-//        this.plan = plan;
-//    }
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date tripDate;
 
     public String getCityName() {
         return cityName;
@@ -47,11 +37,11 @@ public class TripStopEntity {
         this.cityName = cityName;
     }
 
-    public Date getQueryDate() {
-        return queryDate;
+    public Date getTripDate() {
+        return tripDate;
     }
 
-    public void setQueryDate(Date queryDate) {
-        this.queryDate = queryDate;
+    public void setTripDate(Date tripDate) {
+        this.tripDate = tripDate;
     }
 }

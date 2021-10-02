@@ -20,4 +20,6 @@ public interface WeatherRepository extends JpaRepository<WeatherEntity, Long> {
     List<WeatherEntity> findByCity(CityEntity cityEntity);
 
     List<WeatherEntity> findAllByCityAndForecastDateBetween(CityEntity cityEntity, Date startDate, Date endDate);
+
+    void deleteByCity(CityEntity cityEntity);
 }

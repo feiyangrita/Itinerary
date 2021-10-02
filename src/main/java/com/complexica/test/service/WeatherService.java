@@ -18,4 +18,8 @@ public interface WeatherService {
 
     List<WeatherEntity> getWeatherByCityAndDate(CityEntity cityName, Date startDate, Date endDate);
 
+    void deleteWeatherByCity(CityEntity cityEntity);
+
+
+
 }

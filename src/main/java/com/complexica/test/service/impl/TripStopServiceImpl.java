@@ -16,9 +16,4 @@ import java.util.List;
 @Service
 public class TripStopServiceImpl implements TripStopService {
 
-    @Autowired
-    TripStopRepository tripStopRepository;
-    @Autowired
-    TripPlanRepository tripPlanRepository;
-
 }

@@ -1,6 +1,7 @@
 package com.complexica.test.service.impl;
 
 import com.complexica.test.model.CityEntity;
+import com.complexica.test.model.WeatherEntity;
 import com.complexica.test.repository.CityRepository;
 import com.complexica.test.service.CityService;
 import com.complexica.test.service.WeatherService;
@@ -30,19 +31,49 @@ public class CityServiceImpl implements CityService {
     }
 
     @Override
+    public CityEntity getCityByCityAndDate(CityEntity cityEntity, Date startDate, Date endDate){
+        List<WeatherEntity> weatherEntities = weatherService.getWeatherByCityAndDate(cityEntity, startDate, endDate);
+        cityEntity.setWeatherEntities(weatherEntities);
+        return cityEntity;
+    }
+
+    @Override
     public List<CityEntity> getCitiesByCityNameAndDate(String cityName, Date startDate, Date endDate){
-        List<CityEntity> cityEntities = getCitiesByCityName(cityName);
-        cityEntities.forEach(
-                entity ->{
-                    entity.setWeatherEntities(weatherService.getWeatherByCityAndDate(entity, startDate, endDate));
-                }
-        );
+        List<CityEntity> cityEntities = cityRepository.findByCityName(cityName);
+        cityEntities.forEach(entity->{
+            entity = getCityByCityAndDate(entity, startDate, endDate);
+        });
+
         return cityEntities;
     }
+
 
     @Override
     public void deleteCityByName(String cityName){
         cityRepository.deleteByCityName(cityName);
     }
+
+
+    /*
+    * @
+    * */
+    @Override
+    public boolean isCached(CityEntity cityEntity){
+        LocalDateTime current = LocalDateTime.now();
+        return cityEntity.getLastModifiedTime().plusHours(1).isAfter(current);
+    }
+
+    public void deleteCity(CityEntity cityEntity){
+        weatherService.deleteWeatherByCity(cityEntity);
+        cityRepository.delete(cityEntity);
+    }
+
+    @Override
+    public void deleteCitiesByCityName(String cityName){
+        List<CityEntity> cityEntities = cityRepository.findByCityName(cityName);
+        cityEntities.forEach(this::deleteCity);
+    }
+
+
 
 }

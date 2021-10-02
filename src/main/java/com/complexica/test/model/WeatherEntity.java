@@ -35,14 +35,6 @@ public class WeatherEntity {
     @JsonIgnore
     private CityEntity city;
 
-    public String getDisplayTime() {
-        return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(forecastDate);
-    }
-
-    public void setDisplayTime(String displayTime) {
-        this.displayTime = displayTime;
-    }
-
     @Transient
     private String displayTime;
 
@@ -84,5 +76,13 @@ public class WeatherEntity {
 
     public void setCity(CityEntity city) {
         this.city = city;
+    }
+
+    public String getDisplayTime() {
+        return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(forecastDate);
+    }
+
+    public void setDisplayTime(String displayTime) {
+        this.displayTime = displayTime;
     }
 }

@@ -136,6 +136,11 @@ public class WeatherServiceImpl implements WeatherService{
 //    }
 
     @Transactional
+    public void deleteWeatherByCity(CityEntity cityEntity){
+        weatherRepository.deleteByCity(cityEntity);
+    }
+
+    @Transactional
     private CityEntity saveCityEntity(String result){
         JSONObject jsonObject = JSON.parseObject(result);
 

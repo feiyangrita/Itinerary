@@ -32,13 +32,11 @@ public class WeatherController {
 //    @RequestMapping(value = "/weather", method = RequestMethod.GET)
 //    @ResponseBody
 //    public List<CityEntity> getWeatherByCityAndDate(
-//            @RequestParam(name = "city", required = true) String cityName,
+//            @RequestParam(name = "city") String cityName,
 //            @RequestParam(name = "startDate", required = false) @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss") Date startDate,
 //            @RequestParam(name = "endDate", required = false) @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss" ) Date endDate) {
 //
 //        weatherService.saveWeatherByCityName(cityName);
-//        System.out.println(startDate.toString());
-//        System.out.println(endDate.toString());
 //        return cityService.getCitiesByCityNameAndDate(cityName, startDate, endDate);
 //
 //    }
@@ -47,18 +45,23 @@ public class WeatherController {
     @ResponseBody
     public List<CityEntity> getWeatherInfo(
             @RequestParam(name = "city", required = true) String cityName,
-            @RequestParam(name = "date") @DateTimeFormat(pattern="yyyy-MM-dd") Date date1) {
+            @RequestParam(name = "date") @DateTimeFormat(pattern="yyyy-MM-dd") Date date) {
 
         Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date1);
+        calendar.setTime(date);
+        calendar.set(Calendar.HOUR, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
         calendar.add(Calendar.HOUR, 12);
         Date startDate = calendar.getTime();
         calendar.add(Calendar.HOUR, 6);
         Date endDate = calendar.getTime();
 
-        weatherService.saveWeatherByCityName(cityName);
-        System.out.println(startDate.toString());
-        System.out.println(endDate.toString());
+        System.out.println("in weather controller");
+        System.out.println(date);
+        System.out.println(startDate);
+        System.out.println(endDate);
+        prepareData(cityName);
         return cityService.getCitiesByCityNameAndDate(cityName, startDate, endDate);
 
     }
@@ -68,10 +71,36 @@ public class WeatherController {
     @ResponseBody
     public List<CityEntity> getWeatherForecast(
             @RequestParam(name = "city", required = true) String cityName) {
-        String result  = weatherService.saveWeatherByCityName(cityName);
+        prepareData(cityName);
         List<CityEntity> cityEntities = cityService.getCitiesByCityName(cityName);
-        System.out.println(cityEntities.size());
         return cityEntities;
 
     }
+
+
+    public boolean isCached(String cityName){
+        List<CityEntity> cityEntities = cityService.getCitiesByCityName(cityName);
+        if(cityEntities.size() == 0) {
+            return false;
+        } else {
+            return cityService.isCached(cityEntities.get(0));
+        }
+    }
+
+    public void deleteWeather(String cityName){
+        cityService.getCitiesByCityName(cityName).forEach(cityEntity -> {
+            weatherService.deleteWeatherByCity(cityEntity);
+        });
+        cityService.deleteCitiesByCityName(cityName);
+    }
+
+    public void prepareData(String cityName){
+        if(!isCached(cityName)){
+            deleteWeather(cityName);
+            weatherService.saveWeatherByCityName(cityName);
+        }
+    }
+
+
+
 }

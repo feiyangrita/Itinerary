@@ -10,5 +10,6 @@ import java.util.Optional;
  */
 public interface TripPlanService {
     List<TripPlanEntity> listTripPlans();
-    Optional<TripPlanEntity> listTripPlanById(Long id);
+    Optional<TripPlanEntity> getTripPlanById(Long id);
+    TripPlanEntity addTripPlan(TripPlanEntity tripPlanEntity);
 }
