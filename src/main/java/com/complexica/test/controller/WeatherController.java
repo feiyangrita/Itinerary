@@ -41,7 +41,8 @@ public class WeatherController {
 //
 //    }
 
-    @RequestMapping(value = "", method = RequestMethod.GET)
+    @ApiOperation("hello")
+    @GetMapping(value = "")
     @ResponseBody
     public List<CityEntity> getWeatherInfo(
             @RequestParam(name = "city", required = true) String cityName,
@@ -57,10 +58,6 @@ public class WeatherController {
         calendar.add(Calendar.HOUR, 6);
         Date endDate = calendar.getTime();
 
-        System.out.println("in weather controller");
-        System.out.println(date);
-        System.out.println(startDate);
-        System.out.println(endDate);
         prepareData(cityName);
         return cityService.getCitiesByCityNameAndDate(cityName, startDate, endDate);
 
@@ -72,8 +69,7 @@ public class WeatherController {
     public List<CityEntity> getWeatherForecast(
             @RequestParam(name = "city", required = true) String cityName) {
         prepareData(cityName);
-        List<CityEntity> cityEntities = cityService.getCitiesByCityName(cityName);
-        return cityEntities;
+        return cityService.getCitiesByCityName(cityName);
 
     }
 

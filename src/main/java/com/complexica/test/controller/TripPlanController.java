@@ -10,6 +10,8 @@ import com.complexica.test.service.TripStopService;
 import com.complexica.test.service.WeatherService;
 import com.complexica.test.utils.TripPlanEntityVO;
 import com.complexica.test.utils.TripStopWeatherInfo;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,6 +44,8 @@ public class TripPlanController {
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody
+    @ApiOperation("Create a new trip plan. Plan name must be unique.")
+    @ApiImplicitParam(name = "tripPlanEntity",value = "tripPlanEntity",required = true,paramType = "body",dataType = "TripPlanEntity")
     public TripPlanEntity add(@RequestBody TripPlanEntity tripPlanEntity ) {
         return tripPlanService.addTripPlan(tripPlanEntity);
     }

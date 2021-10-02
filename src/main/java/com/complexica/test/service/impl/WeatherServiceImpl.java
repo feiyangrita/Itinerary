@@ -3,6 +3,7 @@ package com.complexica.test.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.complexica.test.apiexception.IncorrectResponseException;
 import com.complexica.test.config.OpenWeatherConfig;
 import com.complexica.test.config.RestTemplateConfig;
 import com.complexica.test.model.CityEntity;
@@ -47,22 +48,17 @@ public class WeatherServiceImpl implements WeatherService{
 
         //TODO: implement a request class to define different API from openWeatherMap
         String url = baseURL + cityName + "&appid=" + key + "&units=" + unit;
+        String result = "";
         try {
             ResponseEntity<String> response = restTemplateConfig.restTemplate().getForEntity(url, String.class);
-            String result = response.getBody();
-            System.out.println(result);
+            result = response.getBody();
             saveCityEntity(result);
-            return response.getBody();
         } catch (HttpClientErrorException.Unauthorized e){
-            return "Opps, there is something wrong when using openWeatherAPI, please contact developers.";
-        } catch (HttpClientErrorException.NotFound e){
-            return "";
+            throw new IncorrectResponseException("Please check or update your openWeatherMap apikey.", e);
         } catch (Exception e){
-            //TODO
-        } finally {
-            //TODO:
-            return "";
+            throw new IncorrectResponseException("Please check openweathermap api.", e);
         }
+        return result;
     }
 
     @Override

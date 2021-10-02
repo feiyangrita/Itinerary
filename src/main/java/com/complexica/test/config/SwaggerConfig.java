@@ -1,5 +1,6 @@
 package com.complexica.test.config;
 
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -14,6 +15,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  * Created by feiyang on 1/10/21.
  */
 @Configuration
+@EnableAutoConfiguration
 @EnableSwagger2
 public class SwaggerConfig {
     @Bean
@@ -21,16 +23,15 @@ public class SwaggerConfig {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 .select()
-                // 添加待扫描包名
-                .apis(RequestHandlerSelectors.basePackage("com.complexica.test"))
+                .apis(RequestHandlerSelectors.basePackage("com.complexica.test.controller"))
                 .paths(PathSelectors.any())
                 .build();
     }
+
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                // 添加描述信息
-                .title("Itinerary API")
-                .description("This is for a test.")
+                .title("Itinerary Project API")
+                .description("This is API documentation for itinerary application.")
                 .version("1.0.0")
                 .build();
     }

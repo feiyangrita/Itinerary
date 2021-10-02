@@ -43,7 +43,6 @@ public class CityEntity {
         this.lastModifiedTime = lastModifiedTime;
     }
 
-    //// TODO: 30/9/21 了解这个是做什么的
     @OneToMany(mappedBy = "city", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<WeatherEntity> weatherEntities;
 

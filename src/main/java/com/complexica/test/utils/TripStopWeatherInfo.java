@@ -24,16 +24,7 @@ public class TripStopWeatherInfo {
         return cityName;
     }
 
-
-//    public String getDisplayTripDate() {
-//        return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(tripDate);
-//    }
-//
-//    public void setDisplayTripDate(String displayTime) {
-//        this.displayTripDate = displayTime;
-//    }
-
-        public String getDisplayTripDate() {
+    public String getDisplayTripDate() {
         return displayTripDate;
     }
 
@@ -52,14 +43,6 @@ public class TripStopWeatherInfo {
     public void setCountry(String country) {
         this.country = country;
     }
-
-//    public Date getTripDate() {
-//        return tripDate;
-//    }
-//
-//    public void setTripDate(Date tripDate) {
-//        this.tripDate = tripDate;
-//    }
 
     public List<WeatherEntity> getWeatherEntities() {
         return weatherEntities;

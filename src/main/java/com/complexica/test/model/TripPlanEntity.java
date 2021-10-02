@@ -31,8 +31,6 @@ public class TripPlanEntity {
         this.tripStopEntities = tripStopEntities;
     }
 
-
-
     public Long getId() {
         return id;
     }
