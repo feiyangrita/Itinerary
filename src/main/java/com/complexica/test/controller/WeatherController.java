@@ -41,9 +41,9 @@ public class WeatherController {
 //
 //    }
 
-    @ApiOperation("hello")
     @GetMapping(value = "")
     @ResponseBody
+    @ApiOperation("Query weather information for specified city and date.")
     public List<CityEntity> getWeatherInfo(
             @RequestParam(name = "city", required = true) String cityName,
             @RequestParam(name = "date") @DateTimeFormat(pattern="yyyy-MM-dd") Date date) {
@@ -64,7 +64,7 @@ public class WeatherController {
     }
 
     @RequestMapping(value = "/forecast", method = RequestMethod.GET)
-    @ApiOperation(value = "gg", notes = "Get 5 days weather forecast with specified city name.")
+    @ApiOperation("Get weather forecast with specified city name.")
     @ResponseBody
     public List<CityEntity> getWeatherForecast(
             @RequestParam(name = "city", required = true) String cityName) {

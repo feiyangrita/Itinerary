@@ -52,12 +52,14 @@ public class TripPlanController {
 
     @RequestMapping(value = "/listall", method = RequestMethod.GET)
     @ResponseBody
+    @ApiOperation("List all trip plan.")
     public List<TripPlanEntity> listAll() {
         return tripPlanService.listTripPlans();
     }
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     @ResponseBody
+    @ApiOperation("List trip plans with id and plan name only.")
     public List<TripPlanEntityVO> list() {
         List<TripPlanEntity> tripPlanEntities =  tripPlanService.listTripPlans();
         List<TripPlanEntityVO> tripPlanEntityVOs = new ArrayList<>();
@@ -73,6 +75,7 @@ public class TripPlanController {
 
     @RequestMapping(value = "/list/{id}", method = RequestMethod.GET)
     @ResponseBody
+    @ApiOperation("List detailed information including weather forecast with specified plan id.")
     public List<TripStopWeatherInfo> list(@PathVariable("id") Long id) {
         List<TripStopWeatherInfo> list = new ArrayList<>();
         tripPlanService.getTripPlanById(id).ifPresent(tripPlanEntity ->{
@@ -101,11 +104,5 @@ public class TripPlanController {
 
         return list;
     }
-
-//    @RequestMapping(value = "/list/{id}", method = RequestMethod.GET)
-//    @ResponseBody
-//    public Optional<TripPlanEntity> list(@PathVariable("id") Long id) {
-//        return tripPlanService.listTripPlanById(id);
-//    }
 
 }
