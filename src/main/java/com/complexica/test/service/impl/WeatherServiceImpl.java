@@ -55,6 +55,8 @@ public class WeatherServiceImpl implements WeatherService{
             saveCityEntity(result);
         } catch (HttpClientErrorException.Unauthorized e){
             throw new IncorrectResponseException("Please check or update your openWeatherMap apikey.", e);
+        } catch (HttpClientErrorException.NotFound e){
+            throw new IncorrectResponseException("City not found." , e);
         } catch (Exception e){
             throw new IncorrectResponseException("Please check openweathermap api.", e);
         }

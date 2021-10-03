@@ -20,6 +20,7 @@ import java.util.Objects;
  * Created by feiyang on 29/9/21.
  */
 @RestController
+@CrossOrigin
 @RequestMapping("/itinerary/weather")
 public class WeatherController {
 
@@ -57,6 +58,9 @@ public class WeatherController {
         Date startDate = calendar.getTime();
         calendar.add(Calendar.HOUR, 6);
         Date endDate = calendar.getTime();
+
+        System.out.println(startDate.toString());
+        System.out.println(endDate.toString());
 
         prepareData(cityName);
         return cityService.getCitiesByCityNameAndDate(cityName, startDate, endDate);

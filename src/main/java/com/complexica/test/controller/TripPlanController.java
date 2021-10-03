@@ -21,6 +21,7 @@ import java.util.*;
  * Created by feiyang on 1/10/21.
  */
 @RestController
+@CrossOrigin
 @RequestMapping("/itinerary/plan")
 public class TripPlanController {
     @Autowired
