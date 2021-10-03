@@ -40,7 +40,7 @@ public class WeatherServiceImpl implements WeatherService{
 
 
     @Override
-    public String saveWeatherByCityName(String cityName){
+    public String saveWeatherByCityName(String cityName) throws IncorrectResponseException{
 
         String baseURL = openWeatherConfig.getBaseURL();
         String key = openWeatherConfig.getKey();

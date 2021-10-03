@@ -1,5 +1,6 @@
 package com.complexica.test.controller;
 
+import com.complexica.test.apiexception.IncorrectResponseException;
 import com.complexica.test.model.CityEntity;
 import com.complexica.test.model.TripPlanEntity;
 import com.complexica.test.model.TripStopEntity;
@@ -15,6 +16,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -81,24 +83,31 @@ public class TripPlanController {
         List<TripStopWeatherInfo> list = new ArrayList<>();
         tripPlanService.getTripPlanById(id).ifPresent(tripPlanEntity ->{
             tripPlanEntity.getTripStopEntities().forEach(tripStopEntity -> {
-                System.out.println("trip stop query date is " + tripStopEntity.getTripDate());
-                List<CityEntity> cities = weatherController.getWeatherInfo(tripStopEntity.getCityName(), tripStopEntity.getTripDate());
+                List<CityEntity> cities;
+                try{
+                    //if there is something wrong with third park api, still return empty information.
+                    cities = weatherController.getWeatherInfo(tripStopEntity.getCityName(), tripStopEntity.getTripDate());
+                } catch (IncorrectResponseException e){
+                    cities = Collections.EMPTY_LIST;
+                }
                 if(cities.size() == 0){
                     TripStopWeatherInfo t = new TripStopWeatherInfo();
                     t.setCityName(tripStopEntity.getCityName());
-                    t.setDisplayTripDate(tripStopEntity.getTripDate().toString());
+                    t.setDisplayTripDate(new SimpleDateFormat("yyyy-MM-dd").format(tripStopEntity.getTripDate()));
                     t.setCountry(null);
                     t.setWeatherEntities(null);
                     list.add(t);
+                } else {
+                    cities.forEach(city ->{
+                        TripStopWeatherInfo t = new TripStopWeatherInfo();
+                        t.setCityName(tripStopEntity.getCityName());
+                        t.setDisplayTripDate(new SimpleDateFormat("yyyy-MM-dd").format(tripStopEntity.getTripDate()));
+                        t.setCountry(city.getCountry());
+                        t.setWeatherEntities(city.getWeatherEntities());
+                        list.add(t);
+                    });
                 }
-                cities.forEach(city ->{
-                    TripStopWeatherInfo t = new TripStopWeatherInfo();
-                    t.setCityName(tripStopEntity.getCityName());
-                    t.setDisplayTripDate(tripStopEntity.getTripDate().toString());
-                    t.setCountry(city.getCountry());
-                    t.setWeatherEntities(city.getWeatherEntities());
-                    list.add(t);
-                });
+
             });
 
         });

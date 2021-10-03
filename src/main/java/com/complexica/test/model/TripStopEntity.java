@@ -26,7 +26,7 @@ public class TripStopEntity {
     private Long id;
     private String cityName;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date tripDate;
 
     public String getCityName() {

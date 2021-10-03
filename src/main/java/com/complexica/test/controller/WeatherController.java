@@ -46,7 +46,7 @@ public class WeatherController {
     @ResponseBody
     @ApiOperation("Query weather information for specified city and date.")
     public List<CityEntity> getWeatherInfo(
-            @RequestParam(name = "city", required = true) String cityName,
+            @RequestParam(name = "city", required = true) String city,
             @RequestParam(name = "date") @DateTimeFormat(pattern="yyyy-MM-dd") Date date) {
 
         Calendar calendar = Calendar.getInstance();
@@ -58,10 +58,7 @@ public class WeatherController {
         Date startDate = calendar.getTime();
         calendar.add(Calendar.HOUR, 6);
         Date endDate = calendar.getTime();
-
-        System.out.println(startDate.toString());
-        System.out.println(endDate.toString());
-
+        String cityName = city.toLowerCase();
         prepareData(cityName);
         return cityService.getCitiesByCityNameAndDate(cityName, startDate, endDate);
 
